@@ -3,6 +3,7 @@ from flask_cors import CORS
 from routes.pacientes import pacientes
 from routes.medicos import medicos
 from routes.especialidades import especialidades
+from routes.consultas import consultas
 
 app = Flask(__name__)
 CORS(app)
@@ -10,6 +11,7 @@ CORS(app)
 app.register_blueprint(pacientes, url_prefix='/pacientes')
 app.register_blueprint(medicos, url_prefix='/medicos')
 app.register_blueprint(especialidades, url_prefix='/especialidades')
+app.register_blueprint(consultas, url_prefix='/consultas')
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)

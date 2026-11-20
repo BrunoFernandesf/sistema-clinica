@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Sistema Clínica</h1>
+
+    <nav>
+        <a href="index.html">Pacientes</a>
+        <a href="medicos.html">Médicos</a>
+        <a href="especialidades.html">Especialidades</a>
+        <a href="consultas.html">Consultas</a>
+    </nav>
+
+    <p class="subtitulo">Cadastro de Consultas</p>
+
+    <div class="linha-destaque"></div>
+
+    <form id="form-consulta">
+        <label for="paciente">Paciente</label>
+        <select id="paciente" name="paciente_id" required>
+            <option value="">Selecione um paciente</option>
+        </select>
+
+        <div class="linha-campos">
+            <div>
+                <label for="medico_id">Médico</label>
+                <select id="medico_id" name="medico_id" required>
+                    <option value="">Selecione um Médico</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="linha-campos">
+            <div>
+                <label for="data">Data</label>
+                <input type="date" id="data" name="data" required>
+            </div>
+
+            <div>
+                <label for="horario">Horário</label>
+                <input type="time" id="horario" name="horario" required>
+            </div>
+
+        </div>
+
+        <div class="linha-campos">
+            <div>
+                <label for="status">Status</label>
+                <select id="status" name="status" required>
+                    <option value="">Selecione o status</option>
+                    <option value="Agendada">Agendada</option>
+                    <option value="Realizada">Realizada</option>
+                    <option value="Cancelada">Cancelada</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="linha-campos">
+            <div>
+                <label for="observacoes">Observações</label>
+                <textarea id="observacoes" name="observacoes"></textarea>
+            </div>
+        </div>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <details>
+        <summary>Consultas cadastradas</summary>
+
+        <div id="lista-consultas"></div>
+    </details>
+
+    <script src="js/consultas.js"></script>
+</body>
+</html>
