@@ -1,13 +1,13 @@
+
 from flask import Blueprint, request, jsonify
 from db import get_connection
 
 medicos = Blueprint('medicos', __name__)
 
-#CREATE
+# CREATE
 @medicos.route('/', methods=['POST'])
 def cadastrar():
     data = request.json
-    print(data)
 
     con = get_connection()
     cursor = con.cursor()
@@ -17,13 +17,14 @@ def cadastrar():
         data["crm"],
         data["telefone"],
         data["email"],
-        data["especialidade"]
+        data["especialidade"],
+        data["especialidade_id"]
     )
 
     sql = """
-        INSERT INTO medicos 
-        (nome, crm, telefone, email, especialidade)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO medicos
+        (nome, crm, telefone, email, especialidade, especialidade_id)
+        VALUES (%s, %s, %s, %s, %s, %s)
     """
 
     cursor.execute(sql, valores)
@@ -31,20 +32,26 @@ def cadastrar():
 
     return "OK"
 
-#READ
+
+# READ
 @medicos.route('/', methods=['GET'])
 def listar():
     con = get_connection()
     cursor = con.cursor()
 
-    sql = """
-        SELECT * FROM medicos
-    """
+    especialidade_id = request.args.get("especialidade_id")
 
-    cursor.execute(sql)
+    if especialidade_id:
+        sql = """
+            SELECT * FROM medicos
+            WHERE especialidade_id = %s
+        """
+        cursor.execute(sql, (especialidade_id,))
+    else:
+        sql = "SELECT * FROM medicos"
+        cursor.execute(sql)
 
     result = cursor.fetchall()
-
     medicos_lista = []
 
     for medico in result:
@@ -54,15 +61,16 @@ def listar():
             "crm": medico[2],
             "telefone": medico[3],
             "email": medico[4],
-            "especialidade": medico[5]
+            "especialidade": medico[5],
+            "especialidade_id": medico[6]
         }
 
         medicos_lista.append(medico_dict)
-    print(medicos_lista)    
 
     return jsonify(medicos_lista)
 
-#UPDATE
+
+# UPDATE
 @medicos.route('/<int:id>', methods=['PUT'])
 def alterar(id):
     data = request.json
@@ -76,13 +84,19 @@ def alterar(id):
         data["telefone"],
         data["email"],
         data["especialidade"],
+        data["especialidade_id"],
         id
     )
 
     sql = """
         UPDATE medicos
-        SET nome =%s, crm =%s, telefone =%s, email =%s, especialidade =%s
-        WHERE id =%s
+        SET nome = %s,
+            crm = %s,
+            telefone = %s,
+            email = %s,
+            especialidade = %s,
+            especialidade_id = %s
+        WHERE id = %s
     """
 
     cursor.execute(sql, valores)
@@ -90,6 +104,8 @@ def alterar(id):
 
     return "OK"
 
+
+# DELETE
 @medicos.route('/<int:id>', methods=['DELETE'])
 def excluir(id):
     con = get_connection()
@@ -102,4 +118,5 @@ def excluir(id):
 
     cursor.execute(sql, (id,))
     con.commit()
+
     return "OK"

@@ -26,15 +26,23 @@
             <option value="">Selecione um paciente</option>
         </select>
 
-        <div class="linha-campos">
-            <div>
-                <label for="medico_id">Médico</label>
-                <select id="medico_id" name="medico_id" required>
-                    <option value="">Selecione um Médico</option>
-                </select>
-            </div>
-
+    <div class="linha-campos">
+        <div>
+            <label for="especialidade">Especialidade</label>
+            <select id="especialidade" name="especialidade_id" required>
+                <option value="">Selecione uma especialidade</option>
+            </select>
         </div>
+    </div>
+
+    <div class="linha-campos">
+        <div>
+            <label for="medico_id">Médico</label>
+            <select id="medico_id" name="medico_id" required disabled>
+                <option value="">Selecione primeiro uma especialidade</option>
+            </select>
+        </div>
+    </div>
 
         <div class="linha-campos">
             <div>
